@@ -1,0 +1,11 @@
+<h1>My Pokemon Garden</h1>
+
+{% if request.user.is_authenticated %}
+<div class="log_reg">
+    <a href="{% url 'home' %}">Main Page</a>
+    <a href="{% url 'logout' %}">Log out</a>
+</div>
+
+{% else %}
+
+{% endif %}

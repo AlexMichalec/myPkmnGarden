@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="log_reg">
+    <div id="poke_options">
+        <button class="poke_option_button">Stats</button>
+        <button class="poke_option_button">Pokedex</button>
+        <button class="poke_option_button">Play</button>
+    </div>
+    <div id="pokedex">
+        <p><h3>#{{pokemon.species.national_pokedex_number}} {{pokemon.species.name}}</h3></p>
+        <p style="background-color: {{pokemon.species.type.all.0.color}};">{{pokemon.species.type.all.0}}</p>
+        {% if pokemon.species.type.count == 2%}
+        <p style="background-color: {{pokemon.species.type.all.1.color}};">{{pokemon.species.type.all.1}}</p>
+        {% endif %}
+        <p>{{pokemon.species.short_description}}</p>
+        <p>{{pokemon.species.description}}</p>
+        <p>Generation: {{pokemon.species.generation}}</p>
+    </div>
+    <br>
+    <div id="stats">
+    <p><h3>Stats:</h3></p>
+    <p>Level: {{pokemon.level}}</p>
+    <p>Gender: {{pokemon.gender}}</p>
+    </div>
+
+    <br>
+    <div id="play" hidden="True">
+        <p><h3>Play:</h3></p>
+    </div>
+
+</div>
+
+{% endblock %}

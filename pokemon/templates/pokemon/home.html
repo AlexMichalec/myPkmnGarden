@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div id="main_text">
+    {% if request.user.is_authenticated %}
+    <div>
+        <h2>Hello {{name}} UwU</h2>
+    </div>
+    <div>
+        <h3>Here are your Pokemons:</h3>
+        {% for pokemon in pokemon_list %}
+            <a href="{% url 'pokemon_page' pokemon.id %}"><p>{{pokemon.species}}({{pokemon.level}})</p></a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div>
+        <p>Welcome to the wonderful world of Pokemon. To start your journey click a button below</p>
+        <a href="{% url 'login' %}">LOGIN</a>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

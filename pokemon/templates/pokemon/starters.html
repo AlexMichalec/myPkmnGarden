@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="log_reg">
+    <h2>Choose your starter:</h2>
+
+    <form action="{% url 'chosen' %}" method="post">
+        {% csrf_token %}
+        <button name="choice" id="grass_starter" value="{{grass_starter.name}}">{{grass_starter.name}}</button>
+        ---
+        <button name="choice" id="fire_starter" value="{{fire_starter.name}}">{{fire_starter.name}}</button>
+        ---
+        <button name="choice" id="water_starter" value="{{water_starter.name}}">{{water_starter.name}}</button>
+
+    </form>
+</div>
+{% endblock %}

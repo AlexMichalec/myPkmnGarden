@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div id="main_text">
+    <div>
+        <h2>Hello {{name}} UwU</h2>
+    </div>
+
+    <a href="{% url 'login' %}">LOGIN</a>
+    <div>
+        <h3>Available Pokemons:</h3>
+        {% for pokemon in pokemon_list %}
+            <li>#{{pokemon.national_pokedex_number}}. {{pokemon.name}} </li>
+        {% endfor %}
+    </div>
+    <div>
+        <h3>Available Types</h3>
+        {% for t in type_list %}
+            <li style="background-color: {{t.color}};">{{t.name}} - </li>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
