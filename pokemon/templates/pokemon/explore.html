@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+
+{% block content%}
+<div class="explore_{{where}}">
+    {% for line in lines %}
+    <p>{{line}}</p>
+    {% endfor %}
+
+    <form action="{% url 'explore' where %}" method="post">
+        {% csrf_token %}
+        {%for b in buttons%}
+        <button class="explore_{{where}}_button" name="choice" value={{b.0}} >{{b.1}}</button>
+        {%endfor%}
+    </form>
+</div>
+{% endblock %}

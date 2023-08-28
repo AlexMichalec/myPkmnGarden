@@ -1,0 +1,18 @@
+{% extends 'main.html'%}
+
+{% block content %}
+
+<div class="standard">
+    <p><h2>Where would you like to go to explore? :D</h2></p>
+    <form action="{% url 'explore' %}" method="post">
+        {% csrf_token %}
+        <button class=explore_forest_button name="choice"  value="Forest">Forest</button>
+        ---
+        <button class=explore_sea_button name="choice"  value="Sea">Sea</button>
+        ---
+        <button class=explore_cave_button name="choice" value="Cave">Cave</button>
+
+    </form>
+</div>
+
+{% endblock %}

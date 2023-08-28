@@ -12,6 +12,9 @@ urlpatterns = [
 
     path('info/', views.info, name='info'),
 
+    path('explore/', views.explore, name='explore'),
+    path('explore/<str:where>/', views.explore, name='explore'),
+
     path('pokemons/<int:pokemon_id>/', views.pokemon_page, name="pokemon_page"),
 
 ]

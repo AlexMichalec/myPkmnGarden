@@ -1,13 +1,38 @@
 {% extends 'main.html' %}
 {% block content %}
+<script>
+    function show(name) {
+        document.getElementById("stats").style.display = "none";
+        document.getElementById("stats_button").disabled = false;
+        document.getElementById("pokedex").style.display = "none";
+        document.getElementById("pokedex_button").disabled = false;
+        document.getElementById("play").style.display = "none";
+        document.getElementById("play_button").disabled = false;
+        document.getElementById(name).style.display = "block";
+        document.getElementById(name+"_button").disabled = true;
+    }
+
+    function play(){
+    if (document.getElementById("fun_hearts").innerText.length <10) {
+    document.getElementById("fun_hearts").innerText += "♥" ;
+    }
+    }
+
+    function feed(){
+    if (document.getElementById("feed_hearts").innerText.length <10) {
+    document.getElementById("feed_hearts").innerText += "♥" ;}
+    }
+
+</script>
+
 
 <div class="log_reg">
     <div id="poke_options">
-        <button class="poke_option_button">Stats</button>
-        <button class="poke_option_button">Pokedex</button>
-        <button class="poke_option_button">Play</button>
+        <button class="poke_option_button" id="stats_button" onclick="show('stats')" disabled>Stats</button>
+        <button class="poke_option_button" id="pokedex_button" onclick="show('pokedex')">Pokedex</button>
+        <button class="poke_option_button" id="play_button" onclick="show('play')">Play</button>
     </div>
-    <div id="pokedex">
+    <div hidden id="pokedex">
         <p><h3>#{{pokemon.species.national_pokedex_number}} {{pokemon.species.name}}</h3></p>
         <p style="background-color: {{pokemon.species.type.all.0.color}};">{{pokemon.species.type.all.0}}</p>
         {% if pokemon.species.type.count == 2%}
@@ -19,14 +44,32 @@
     </div>
     <br>
     <div id="stats">
-    <p><h3>Stats:</h3></p>
-    <p>Level: {{pokemon.level}}</p>
-    <p>Gender: {{pokemon.gender}}</p>
+        <p>Species: {{pokemon.species.name}}</p>
+        {% if pokemon.name != None %}
+        <p>Name: {{pokemon.name}}</p>
+        {% endif %}
+        <p>Level: {{pokemon.level}}</p>
+        <p>Experience: {{pokemon.get_exp}}exp </p>
+        <p>Gender: {{pokemon.gender}}</p>
+        <p>Moveset: </p>
+        <p>[ Work___ ][ in_____  ]</p>
+        <p>[ Progress ][ ....____  ]</p>
     </div>
 
     <br>
-    <div id="play" hidden="True">
-        <p><h3>Play:</h3></p>
+    <div hidden id="play">
+        <p><h3>Happiness</h3></p>
+        <p id="fun_hearts">♥♥♥♥♥♥♥</p>
+        <p><button onclick="play()">PLAY WITH</button></p>
+        <br>
+
+        <p><h3>Hunger</h3></p>
+        <p id="feed_hearts">♥♥♥♥</p>
+        <p><button onclick="feed()">FEED</button></p>
+
+        <br>
+        <p>WORK IN PROGRESS</p>
+
     </div>
 
 </div>

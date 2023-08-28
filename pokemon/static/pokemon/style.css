@@ -35,6 +35,82 @@ h2 {
     text-align: center;
 }
 
+.standard {
+    background-color: rgb(239,242,228);
+    padding: 20px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 10%;
+    border-radius: 30px;
+    text-align: center;
+}
+
+.explore_forest {
+    background-color: green;
+    color: lightgreen;
+    padding: 20px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 5%;
+    border-radius: 30px;
+    text-align: center;
+    border-style: solid;
+    border-color: #8c6430;
+}
+
+.explore_forest_button {
+    background-color: #8c6430;
+    color: lightgreen;
+    padding: 15px;
+    border-radius: 30px;
+    text-align: center;
+    margin: 5px;
+    font-size: 18px;
+}
+
+.explore_sea {
+    background-color: lightblue;
+    color: blue;
+    padding: 20px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 5%;
+    border-radius: 30px;
+    text-align: center;
+    border-style: solid;
+}
+.explore_sea_button {
+    background-color: orange;
+    color: white;
+    padding: 15px;
+    border-radius: 30px;
+    text-align: center;
+    margin: 5px;
+    font-size: 18px;
+}
+
+
+.explore_cave {
+    background-color: silver;
+    color: gray3;
+    padding: 20px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 5%;
+    border-radius: 30px;
+    text-align: center;
+    border-style: solid;
+}
+.explore_cave_button {
+    background-color: gray;
+    color: white;
+    padding: 15px;
+    border-radius: 30px;
+    text-align: center;
+    margin: 5px;
+    font-size: 18px;
+}
+
 #messages {
     background-color: rgb(245,144,154);
     color: rgb(140,0,0);
@@ -70,4 +146,6 @@ h2 {
 .poke_option_button:active {
     background-color: #EC407A;
 }
+.poke_option_button:disabled {
+    background-color: #EC407A;
 }

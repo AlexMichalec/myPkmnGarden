@@ -3,6 +3,9 @@
 {% if request.user.is_authenticated %}
 <div class="log_reg">
     <a href="{% url 'home' %}">Main Page</a>
+    ____
+    <a href="{% url 'explore' %}">Explore</a>
+    ____
     <a href="{% url 'logout' %}">Log out</a>
 </div>
 
