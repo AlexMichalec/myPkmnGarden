@@ -1,9 +1,13 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<div class="log_reg">
+<div class="standard">
     <h2>Choose your starter:</h2>
-
+    <div>
+        <img class="poke_starter_img" src="{{grass_starter.picture_source}}" alt="{{grass_starter_name}} picture">
+        <img class="poke_starter_img" src="{{fire_starter.picture_source}}" alt="{{fire_starter_name}} picture">
+        <img class="poke_starter_img" src="{{water_starter.picture_source}}" alt="{{water_starter_name}} picture">
+    </div>
     <form action="{% url 'chosen' %}" method="post">
         {% csrf_token %}
         <button name="choice" id="grass_starter" value="{{grass_starter.name}}">{{grass_starter.name}}</button>

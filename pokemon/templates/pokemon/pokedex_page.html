@@ -1,0 +1,25 @@
+{% extends 'main.html'%}
+
+{% block content %}
+<div id="pokedex">
+
+    <div class="pokedex_page">
+
+            <img class="poke_page_img" src="{{pokemon.picture_source}}" alt="{{pokemon.species.name}} image">
+
+        <p><h3>#{{pokemon.national_pokedex_number}} {{pokemon.name}}</h3></p>
+        <div class="pokemon_type">
+            <p style="background-color: {{pokemon.type.all.0.color}};">{{pokemon.type.all.0}}</p>
+        </div>
+        {% if pokemon.type.count == 2%}
+        <div class="pokemon_type">
+        <p style="background-color: {{pokemon.type.all.1.color}};">{{pokemon.type.all.1}}</p>
+        </div>
+            {% endif %}
+        <p>{{pokemon.short_description}}</p>
+        <p>{{pokemon.description}}</p>
+        <p>Generation: {{pokemon.generation}}</p>
+
+    </div>
+</div>
+{% endblock %}

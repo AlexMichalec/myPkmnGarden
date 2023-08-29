@@ -17,4 +17,6 @@ urlpatterns = [
 
     path('pokemons/<int:pokemon_id>/', views.pokemon_page, name="pokemon_page"),
 
+    path('pokedex/', views.pokedex, name="pokedex"),
+
 ]

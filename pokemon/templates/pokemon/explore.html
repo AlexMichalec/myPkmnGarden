@@ -1,7 +1,15 @@
 {% extends 'main.html' %}
 
 {% block content%}
-<div class="explore_{{where}}">
+<div id="explore_{{where}}" class="explore">
+    <div>
+        {% load static %}
+        <img id="explore_location_pic" src="{% static where_pic %}" alt="{{where}}">
+        {% if pokemon_pic_src is not None %}
+        <img id="explore_pokemon_pic" src="{{pokemon_pic_src}}" alt="{{pokemon}} image">
+        {% endif %}
+    </div>
+
     {% for line in lines %}
     <p>{{line}}</p>
     {% endfor %}

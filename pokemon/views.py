@@ -9,6 +9,32 @@ from django.contrib.auth import authenticate, login, logout
 import random
 
 
+def random_pokemon_name(where=None):
+    all = list(PokemonSpecies.objects.filter(if_starter=False))
+    if where == "sea":
+        type = PokemonType.objects.get(name='Water')
+        all = list(PokemonSpecies.objects.filter(if_starter=False).filter(type=type))
+
+    elif where == "forest":
+        type1 = PokemonType.objects.get(name='Grass')
+        type2 = PokemonType.objects.get(name='Bug')
+        type3 = PokemonType.objects.get(name='Normal')
+        all = list(PokemonSpecies.objects.filter(if_starter=False).filter(type=type1)) + list(
+            PokemonSpecies.objects.filter(if_starter=False).filter(type=type2)) + list(
+            PokemonSpecies.objects.filter(if_starter=False).filter(type=type3))
+
+    elif where == "cave":
+        type1 = PokemonType.objects.get(name='Rock')
+        type2 = PokemonType.objects.get(name='Ground')
+        type3 = PokemonType.objects.get(name='Steel')
+        all = list(PokemonSpecies.objects.filter(if_starter=False).filter(type=type1)) + list(
+            PokemonSpecies.objects.filter(if_starter=False).filter(type=type2)) + list(
+            PokemonSpecies.objects.filter(if_starter=False).filter(type=type3))
+        all = all + [PokemonSpecies.objects.get(name="Zubat")]*10
+
+    return random.choice(all).name
+
+
 def home(request):
     if request.user.is_authenticated:
         pokemon_list = request.user.pokemonmonster_set.all()
@@ -76,7 +102,7 @@ def registerPage(request):
     }
     return render(request, 'pokemon/login_register.html', context)
 
-
+@login_required(login_url='login')
 def logoutUser(request):
     logout(request)
     return redirect('home')
@@ -112,14 +138,16 @@ def starter_chosen(request):
     new_pokemon.save()
     return redirect('home')
 
-
+@login_required(login_url='login')
 def pokemon_page(request, pokemon_id):
+    if PokemonMonster.objects.get(id=pokemon_id).owner != request.user:
+        return redirect('home')
     context = {
         'pokemon': PokemonMonster.objects.get(id=pokemon_id),
     }
     return render(request, 'pokemon/pokemon_page.html', context)
 
-
+@login_required(login_url='login')
 def explore(request, where=None):
     if where is None:
         if request.method == 'POST':
@@ -128,78 +156,70 @@ def explore(request, where=None):
             return render(request, 'pokemon/explore_choice.html')
 
     next_step = random.randint(1, 10)
-    to_post = "..."
-    if request.method == 'POST':
-        if PokemonSpecies.objects.filter(name=request.POST['choice']).count():
-            to_post = request.POST['choice']
-            lines = ["*" for i in range(random.randint(3, 7))]
-            if next_step < 6:
-                lines.append("Pokemon escaped from Pokeball")
-                lines.append("What are you doing?")
-                buttons = [(to_post, "Try to catch it(again)"), ("F", "Flee")]
-            elif next_step < 8:
-                lines.append("Pokemon escaped from Pokeball")
-                lines.append(f"It disappeared into the {where}")
-                lines.append("Which way now?")
-                buttons = [("L", "Left"), ("S", "Straight ahead"), ("R", "Right")]
-            else:
-                lines.append("Success!")
-                lines.append("You caught: " + to_post)
-                lines.append("Which way now?")
-                buttons = [("L", "Left"), ("S", "Straight ahead"), ("R", "Right")]
-                p = PokemonMonster(species=PokemonSpecies.objects.get(name=to_post),
-                                   level=random.randint(3, 10),
-                                   owner=request.user,
-                                   gender=random.choice(("Male", "Female")))
-                if p.species.if_genderless:
-                    p.gender = "Unknown"
-                p.save()
-            context = {'where': where,
-                       'to_post': to_post,
-                       'lines': lines,
-                       'buttons': buttons, }
-            return render(request, 'pokemon/explore.html', context)
+    pokemon = "..."
+    pokemon_pic_src = None
+    where_pic = 'pokemon/images/' + where + '.jpg'
+    if request.method == 'POST' and PokemonSpecies.objects.filter(name=request.POST['choice']).count():
+        pokemon = request.POST['choice']
+        lines = ["*" for i in range(random.randint(3, 7))]
+        if next_step < 6:
+            pokemon_pic_src = PokemonSpecies.objects.get(name=pokemon).picture_source
+            lines.append("Pokemon escaped from Pokeball")
+            lines.append("What are you doing?")
+            buttons = [(pokemon, "Try to catch it(again)"), ("F", "Flee")]
+        elif next_step < 8:
+            pokemon = "..."
+            lines.append("Pokemon escaped from Pokeball")
+            lines.append(f"It disappeared into the {where}")
+            lines.append("Which way now?")
+            buttons = [("L", "Left"), ("S", "Straight ahead"), ("R", "Right")]
+        else:
+            pokemon_pic_src = 'https://static.wikia.nocookie.net/pokemon-fano/images/6/6f/Poke_Ball.png/revision/latest?cb=20140520015336'
+            pokemon_level = random.randint(3, 10)
+            lines.append("Success!")
+            lines.append(f"You caught: {pokemon} ({pokemon_level})")
+            lines.append("Which way now?")
+            buttons = [("L", "Left"), ("S", "Straight ahead"), ("R", "Right")]
+            p = PokemonMonster(species=PokemonSpecies.objects.get(name=pokemon),
+                               level=random.randint(3, 10),
+                               owner=request.user,
+                               gender=random.choice(("Male", "Female")))
+            if p.species.if_genderless:
+                p.gender = "Unknown"
+            p.save()
 
-    lines = [random.randint(0, 30) for i in range(random.randint(3, 7))]
-    lines = ["." * (5 + i) + ("swim" if where == "sea" else "walk") + "." * (40 - i) for i in lines]
-    if next_step < 8:
-        lines.append("Which way now?")
-        buttons = [("L", "Left"), ("S", "Straight ahead"), ("R", "Right")]
     else:
-        lines.append("Wild pokemon appeared!")
-        to_post = random_pokemon_name(where)
-        lines.append("It's " + to_post)
-        lines.append("What are you doing?")
-        buttons = [(to_post, "Try to catch it"), ("F", "Flee")]
-
+        lines = [random.randint(0, 30) for i in range(random.randint(3, 7))]
+        lines = ["." * (5 + i) + ("swim" if where == "sea" else "walk") + "." * (40 - i) for i in lines]
+        if next_step < 8:
+            lines.append("Which way now?")
+            buttons = [("L", "Left"), ("S", "Straight ahead"), ("R", "Right")]
+        else:
+            lines.append("Wild pokemon appeared!")
+            pokemon = random_pokemon_name(where)
+            lines.append("It's " + pokemon)
+            lines.append("What are you doing?")
+            buttons = [(pokemon, "Try to catch it"), ("F", "Flee")]
+            pokemon_pic_src = PokemonSpecies.objects.get(name=pokemon).picture_source
+    if len(lines) >4:
+        lines = lines[-4:]
     context = {'where': where,
-               'to_post': to_post,
+               'where_pic': where_pic,
+               'pokemon': pokemon,
+               'pokemon_pic_src': pokemon_pic_src,
                'lines': lines,
                'buttons': buttons, }
     return render(request, 'pokemon/explore.html', context)
 
 
-def random_pokemon_name(where='hujwie'):
-    all = list(PokemonSpecies.objects.filter(if_starter=False))
-    if where == "sea":
-        type = PokemonType.objects.get(name='Water')
-        all = list(PokemonSpecies.objects.filter(if_starter=False).filter(type=type))
 
-    elif where == "forest":
-        type1 = PokemonType.objects.get(name='Grass')
-        type2 = PokemonType.objects.get(name='Bug')
-        type3 = PokemonType.objects.get(name='Normal')
-        all = list(PokemonSpecies.objects.filter(if_starter=False).filter(type=type1)) + list(
-            PokemonSpecies.objects.filter(if_starter=False).filter(type=type2)) + list(
-            PokemonSpecies.objects.filter(if_starter=False).filter(type=type3))
 
-    elif where == "cave":
-        type1 = PokemonType.objects.get(name='Rock')
-        type2 = PokemonType.objects.get(name='Ground')
-        type3 = PokemonType.objects.get(name='Steel')
-        all = list(PokemonSpecies.objects.filter(if_starter=False).filter(type=type1)) + list(
-            PokemonSpecies.objects.filter(if_starter=False).filter(type=type2)) + list(
-            PokemonSpecies.objects.filter(if_starter=False).filter(type=type3))
-        all.append(PokemonSpecies.objects.get(name="Zubat"))
+@login_required(login_url='login')
+def pokedex(request):
+    if request.method=="POST" and PokemonSpecies.objects.filter(name=request.POST['choice']).count()>0:
+        return render(request, 'pokemon/pokedex_page.html',
+                      {'pokemon':PokemonSpecies.objects.get(name=request.POST['choice'])})
 
-    return random.choice(all).name
+    pokemon_list = PokemonSpecies.objects.all().order_by('national_pokedex_number')
+    pokemon_list = [(x.is_caught(request),x) for x in pokemon_list]
+    return render(request, 'pokemon/pokedex.html', {"pokemon_list": pokemon_list})

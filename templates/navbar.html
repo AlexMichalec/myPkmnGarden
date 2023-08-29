@@ -1,10 +1,12 @@
 <h1>My Pokemon Garden</h1>
 
 {% if request.user.is_authenticated %}
-<div class="log_reg">
+<div id="navbar">
     <a href="{% url 'home' %}">Main Page</a>
     ____
     <a href="{% url 'explore' %}">Explore</a>
+    ____
+    <a href="{% url 'pokedex' %}">Pokedex</a>
     ____
     <a href="{% url 'logout' %}">Log out</a>
 </div>

@@ -22,15 +22,26 @@ class PokemonSpecies(models.Model):
     name = models.CharField(max_length=100)
     short_description = models.CharField(max_length=200)
     description = models.TextField()
+
+    picture_source = models.CharField(max_length=200, blank=True)
+
     generation = models.ForeignKey(PokemonGeneration,on_delete=models.CASCADE)
     national_pokedex_number = models.IntegerField(unique=True)
     type = models.ManyToManyField(PokemonType)
+
     if_starter = models.BooleanField(default=False)
     if_genderless = models.BooleanField(default=False)
     if_legendary = models.BooleanField(default=False)
+
     if_evolve_by_level_up = models.BooleanField(default=False)
     evolve_level = models.IntegerField(default=0)
     evolve_species = models.ManyToManyField('PokemonSpecies',blank=True)
+
+    def is_caught(self, request):
+        return request.user.pokemonmonster_set.all().filter(species=self).count()>0
+
+
+
     #picture?
     #attacksset
     #another basic stats

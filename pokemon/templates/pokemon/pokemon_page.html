@@ -26,7 +26,11 @@
 </script>
 
 
-<div class="log_reg">
+
+<div class="standard">
+
+    <img class="poke_page_img" src="{{pokemon.species.picture_source}}" alt="{{pokemon.species.name}} image">
+
     <div id="poke_options">
         <button class="poke_option_button" id="stats_button" onclick="show('stats')" disabled>Stats</button>
         <button class="poke_option_button" id="pokedex_button" onclick="show('pokedex')">Pokedex</button>
@@ -34,10 +38,14 @@
     </div>
     <div hidden id="pokedex">
         <p><h3>#{{pokemon.species.national_pokedex_number}} {{pokemon.species.name}}</h3></p>
-        <p style="background-color: {{pokemon.species.type.all.0.color}};">{{pokemon.species.type.all.0}}</p>
+        <div class="pokemon_type">
+            <p style="background-color: {{pokemon.species.type.all.0.color}};">{{pokemon.species.type.all.0}}</p>
+        </div>
         {% if pokemon.species.type.count == 2%}
+        <div class="pokemon_type">
         <p style="background-color: {{pokemon.species.type.all.1.color}};">{{pokemon.species.type.all.1}}</p>
-        {% endif %}
+        </div>
+            {% endif %}
         <p>{{pokemon.species.short_description}}</p>
         <p>{{pokemon.species.description}}</p>
         <p>Generation: {{pokemon.species.generation}}</p>
