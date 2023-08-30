@@ -994,8 +994,7 @@ Mega Rayquaza	DRAGON
 FLYING	780	105	180	100	180	100	115
 Jirachi0385	Jirachi	STEEL
 PSYCHIC	600	100	100	100	100	100	100
-0386	Deoxys
-    PSYCHIC
+0386	Deoxys  PSYCHIC
 600	50	150	50	150	50	150
 Turtwig0387	Turtwig	GRASS
 318	55	68	64	45	55	31
@@ -2474,11 +2473,11 @@ PSYCHIC	590	90	130	88	70	108	104
     lista = text.split("\n")[:630]
     lista = [x.split('\t') for x in lista]
     lista = [x for x in lista if len(x) == 3 or len(x) == 4]
-    print(lista)
-    print(len(lista))
+    counter =0
 
     for pok in lista:
         if PokemonSpecies.objects.filter(name=pok[1].capitalize().strip()).count() == 0:
+            counter += 1
             gen = 0
             num = int(pok[0])
             if num >151 and num<252:
@@ -2511,7 +2510,7 @@ PSYCHIC	590	90	130	88	70	108	104
             pokemon.picture_source=f"https://assets.pokemon.com/assets/cms2/img/pokedex/full/{str(int(pok[0])):0>3}.png"
             pokemon.save()
 
-
+    print(counter)
 
 
 
