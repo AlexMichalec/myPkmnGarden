@@ -9,7 +9,7 @@
         <form action="{% url 'pokedex' %}" method="POST">
             {% csrf_token %}
             {% for caught, pokemon in pokemon_list %}
-            {% if caught %}
+            {% if caught or True %}
             <button class="pokedex_el" name="choice" value="{{pokemon.name}}">
                 <img src={{pokemon.picture_source}} alt="{{pokemon.name}} image">
                 <p>#{{pokemon.national_pokedex_number}} {{pokemon.name}}</p>
