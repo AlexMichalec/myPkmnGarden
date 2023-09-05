@@ -10,28 +10,47 @@ import random
 
 
 def random_pokemon_name(where=None):
-    all = list(PokemonSpecies.objects.filter(if_starter=False))
+    base = PokemonSpecies.objects.filter(if_starter=False).filter(if_legendary=False)
+    all = list(base)
+
     if where == "sea":
         type = PokemonType.objects.get(name='Water')
-        all = list(PokemonSpecies.objects.filter(if_starter=False).filter(type=type))
+        all = list(base.filter(type=type))
 
     elif where == "forest":
         type1 = PokemonType.objects.get(name='Grass')
         type2 = PokemonType.objects.get(name='Bug')
         type3 = PokemonType.objects.get(name='Normal')
-        all = list(PokemonSpecies.objects.filter(if_starter=False).filter(type=type1)) + list(
-            PokemonSpecies.objects.filter(if_starter=False).filter(type=type2)) + list(
-            PokemonSpecies.objects.filter(if_starter=False).filter(type=type3))
+        all = list(base.filter(type=type1)) + list(
+            base.filter(type=type2)) + list(base.filter(type=type3))
 
     elif where == "cave":
         type1 = PokemonType.objects.get(name='Rock')
         type2 = PokemonType.objects.get(name='Ground')
         type3 = PokemonType.objects.get(name='Steel')
-        all = list(PokemonSpecies.objects.filter(if_starter=False).filter(type=type1)) + list(
+        all = list(PokemonSpecies.objects.filter(if_starter=False).filter(if_legendary=False).filter(type=type1)) + list(
             PokemonSpecies.objects.filter(if_starter=False).filter(type=type2)) + list(
             PokemonSpecies.objects.filter(if_starter=False).filter(type=type3))
         all = all + [PokemonSpecies.objects.get(name="Zubat")]*10
 
+    elif where == "volcano":
+        type1 = PokemonType.objects.get(name='Fire')
+        all = list(base.filter(type=type1))
+
+    elif where == "tundra":
+        type1 = PokemonType.objects.get(name='Ice')
+        all = list(base.filter(type=type1))
+
+    elif where == "graveyard":
+        type1 = PokemonType.objects.get(name='Dark')
+        type2 = PokemonType.objects.get(name='Psychic')
+        type3 = PokemonType.objects.get(name='Ghost')
+        all = list(base.filter(type=type1)) + list(
+            base.filter(type=type2)) + list(
+            base.filter(type=type3))
+
+    legends = list(PokemonSpecies.objects.filter(if_legendary=True))
+    all = all*100 + legends
     return random.choice(all).name
 
 

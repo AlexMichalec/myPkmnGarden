@@ -128,6 +128,49 @@ h2 {
     font-size: 18px;
 }
 
+#explore_graveyard {
+    background-color: rgb(213,181,247);
+    color: rgb(17, 12, 140);
+}
+.explore_graveyard_button {
+    background-color: rgb(163,211,255);
+    color: rgb(136, 18, 255);
+    padding: 15px;
+    border-radius: 30px;
+    text-align: center;
+    margin: 5px;
+    font-size: 18px;
+}
+
+#explore_volcano {
+    background-color: #330D07;
+    color: #FF8C1D;
+}
+.explore_volcano_button {
+    background-color: #5F0C01;
+    color: #FC5310;
+    padding: 15px;
+    border-radius: 30px;
+    text-align: center;
+    margin: 5px;
+    font-size: 18px;
+}
+
+#explore_tundra {
+    background-color: #B7F1FF;
+    color: #19B4FF;
+}
+.explore_tundra_button {
+    background-color: #58CAE2;
+    color: #D3F7FF;
+    padding: 15px;
+    border: 2px solid ;
+    border-radius: 30px;
+    text-align: center;
+    margin: 5px;
+    font-size: 18px;
+}
+
 #messages {
     background-color: rgb(245,144,154);
     color: rgb(140,0,0);
