@@ -55,16 +55,30 @@ def random_pokemon_name(where=None):
 
 
 def home(request):
+    if request.method=="POST":
+        return redirect("pokemon_page",pokemon_id=request.POST["choice"])
+
+    context={}
     if request.user.is_authenticated:
-        pokemon_list = request.user.pokemonmonster_set.all()
+        pokemon_list = list(request.user.pokemonmonster_set.all())
+        garden_pokemon_list = pokemon_list[:]
+        random.shuffle(garden_pokemon_list)
+        garden_pokemon_list = garden_pokemon_list[:10]
+        temp = []
+        for g in garden_pokemon_list:
+            top = random.randint(40,80)
+            left = random.randint(0,85)
+            width = random.randint(5,20)
+            style = f" top: {top}%; left: {left}%; width: {width}%"
+            temp.append({'pokemon': g, 'style': style})
+        garden_pokemon_list = temp
         name = request.user.username
-    else:
-        pokemon_list = []
-        name = ""
-    context = {
-        'name': name,
-        'pokemon_list': pokemon_list,
-    }
+        context = {
+            'username': name,
+            'pokemon_list': pokemon_list,
+            'garden_pokemon_list': garden_pokemon_list,
+        }
+
     return render(request, 'pokemon/home.html', context)
 
 

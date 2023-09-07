@@ -2,23 +2,38 @@
 
 {% block content %}
 
-<div id="main_text">
-    {% if request.user.is_authenticated %}
-    <div>
-        <h2>Hello {{name}} UwU</h2>
-    </div>
-    <div>
-        <h3>Here are your Pokemons:</h3>
-        {% for pokemon in pokemon_list %}
-            <a href="{% url 'pokemon_page' pokemon.id %}"><p>{{pokemon.species}}({{pokemon.level}})</p></a>
+{% load static %}
+
+{% if request.user.is_authenticated %}
+<div id="garden">
+<h2>Witaj {{username}}!</h2>
+<div id="garden_pokemons">
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for g in garden_pokemon_list %}
+            <button style="{{g.style}}" class="garden_pokemon_button" name="choice" value="{{g.pokemon.id}}">
+                {{g.pokemon.species.name}} ({{g.pokemon.level}})
+        <img src="{{g.pokemon.species.picture_source}}" alt="{{g.pokemon.species.name}}">
+        </button>
         {% endfor %}
-    </div>
-    {% else %}
+    </form>
+
+
+</div>
+</div>
+
+{% else %}
+<div id="main_text">
+
+
+
+
     <div>
         <p>Welcome to the wonderful world of Pokemon. To start your journey click a button below</p>
         <a href="{% url 'login' %}">LOGIN</a>
     </div>
-    {% endif %}
 
 </div>
+{% endif %}
+
 {% endblock %}

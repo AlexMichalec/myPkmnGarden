@@ -1,0 +1,27 @@
+Things to do:
+
+Garden:
+-better locate pokemon in the garden
+-option to see All Pokemons
+
+Pokemon:
+-add more evolutions
+-add descriptions and short desc
+-add genderless/legendary/starters
+-add missing pokemons
+-correct generations
+
+Pokedex:
+-make it work faster
+-add filters
+
+Explore:
+-hide second and third evo stages
+-some levels to unlock
+-more locations
+
+General:
+-add eggs
+-make sure you can obtain all Pokemons
+-add items
+-add social dimension (talk, transfer, fight?)

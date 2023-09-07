@@ -1,6 +1,11 @@
 body {
     background-color: rgb(200, 237, 164);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-image: url("/static/pokemon/images/garden.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+
 }
 
 img {
@@ -280,12 +285,12 @@ h2 {
 .who_button {
     background-color: red;
     color: black;
-    padding: 15px;
+    padding: 10px 15px;
     border-radius: 30px;
     text-align: center;
     font-size: 18px;
     width: 30%;
-    margin: 10px 5%;
+    margin: 5px 5%;
 }
 
 .who_button:hover {
@@ -294,4 +299,28 @@ h2 {
 
 #who_main{
     border: 3px red solid;
+    max-width: 400px;
+    margin: 30px auto;
+
 }
+
+#garden {
+    color: white;
+}
+
+.garden_pokemon_button{
+    width: 10%;
+    min-width: 80px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    background-color: transparent;
+    color: transparent;
+    border: 0;
+}
+
+.garden_pokemon_button:hover{
+    border: solid 3px white;
+    color: white;
+}
+
