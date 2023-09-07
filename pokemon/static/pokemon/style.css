@@ -263,3 +263,35 @@ h2 {
     border-radius: 30px;
     text-align: center;
 }
+
+#who_img{
+    filter: brightness(0%) drop-shadow(0px 0px 10px blue);
+    width: 80%;
+}
+
+#who_image_div{
+    background-color: white;
+    width: 80%;
+    margin: auto;
+    border-radius: 30px;
+    border: 3px purple solid;
+}
+
+.who_button {
+    background-color: red;
+    color: black;
+    padding: 15px;
+    border-radius: 30px;
+    text-align: center;
+    font-size: 18px;
+    width: 30%;
+    margin: 10px 5%;
+}
+
+.who_button:hover {
+    background-color: #FF3B58;
+}
+
+#who_main{
+    border: 3px red solid;
+}

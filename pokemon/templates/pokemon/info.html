@@ -19,5 +19,11 @@
             <li style="background-color: {{t.color}};">{{t.name}} - </li>
         {% endfor %}
     </div>
+    <div>
+        <h3>Available Evolutions</h3>
+        {% for evo in evolution_list %}
+            <li>{{evo}} </li>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

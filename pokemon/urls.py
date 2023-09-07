@@ -16,7 +16,9 @@ urlpatterns = [
     path('explore/<str:where>/', views.explore, name='explore'),
 
     path('pokemons/<int:pokemon_id>/', views.pokemon_page, name="pokemon_page"),
+    path('pokemons/<int:pokemon_id>/who/', views.who_that_pokemon, name="who"),
 
     path('pokedex/', views.pokedex, name="pokedex"),
+
 
 ]

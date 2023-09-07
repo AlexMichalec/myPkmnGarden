@@ -1,0 +1,48 @@
+{% extends 'main.html'%}
+
+{% block content %}
+
+<script>
+    function correct() {
+        document.getElementById("who_image_div").style.backgroundColor = "lightgreen";
+        document.getElementById("who_image_div").style.borderColor = "green";
+        document.getElementById("who_img").style.filter = "brightness(100%)";
+        document.getElementById("correct_one").style.backgroundColor = "lightgreen";
+    }
+
+    function wrong() {
+        document.getElementById("who_image_div").style.backgroundColor = "pink";
+        document.getElementById("who_image_div").style.borderColor = "red";
+        document.getElementById("who_img").style.filter = "brightness(80%) grayscale(100%)";
+        document.getElementById("correct_one").style.backgroundColor = "lightgreen";
+    }
+
+
+
+</script>
+
+<div id="who_main" class="standard">
+    <div id="who_image_div">
+        <img id="who_img" src="{{pokemon_image}}" alt="Image of Pokemon">
+    </div>
+    <div id="who_answers">
+        <h3>Who's that Pokemon?</h3>
+      <form action="" method="post">
+        {% csrf_token %}
+        {%for n in pokemon_names%}
+          {% if n == pokemon %}
+          <button id="correct_one" class="who_button" name="choice" value="True" onclick="correct()">{{n}}</button>
+          {% else %}
+          <button class="who_button" name="choice" value="False" onclick="wrong()">{{n}}</button>
+          {% endif %}
+
+        {%endfor%}
+    </form>
+
+    </div>
+    <label for="file">{{name}}({{level}}) exp:</label>
+    <progress id="file" value="{{exp_now}}" max="{{exp_next_level}}"> 32% </progress>
+
+</div>
+
+{% endblock %}

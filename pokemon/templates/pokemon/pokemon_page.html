@@ -66,6 +66,12 @@
 
     <br>
     <div hidden id="play">
+
+        <form action="{% url 'pokemon_page' pokemon.id %}who/" method="post">
+        {% csrf_token %}
+        <button class="who_button" name="choice"  value="Forest">Who's That Pokemon?</button>
+        </form>
+
         <p><h3>Happiness</h3></p>
         <p id="fun_hearts">♥♥♥♥♥♥♥</p>
         <p><button onclick="play()">PLAY WITH</button></p>

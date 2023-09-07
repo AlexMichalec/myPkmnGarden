@@ -1,6 +1,6 @@
 import re
 from pokemon.models import PokemonSpecies, PokemonType, PokemonGeneration
-def pokemon_names():
+def pokemon_names(liczba):
     text ="""
     Bulbasaur0001	Bulbasaur	GRASS
 POISON	318	45	49	49	65	65	45
@@ -1587,7 +1587,7 @@ Litleo0667	Litleo	FIRE
 NORMAL	369	62	50	58	73	54	72
 Pyroar0668	Pyroar	FIRE
 NORMAL	507	86	68	72	109	66	106
-Flabébé0669	Flabébé	FAIRY
+0669	Flabébé	FAIRY
 303	44	38	39	61	79	42
 Floette0670	Floette	FAIRY
 371	54	45	47	75	98	52
@@ -1603,24 +1603,10 @@ Pangoro0675	Pangoro	FIGHTING
 DARK	495	95	124	78	69	71	58
 Furfrou0676	Furfrou	NORMAL
 472	75	80	60	65	90	102
-Espurr0677	Espurr	PSYCHIC
-355	62	48	54	63	60	68
-Meowstic (Male)0678	Meowstic
-Male	PSYCHIC
-466	74	48	76	83	81	104
-Meowstic (Female)0678	Meowstic
-Female	PSYCHIC
-466	74	48	76	83	81	104
 Honedge0679	Honedge	STEEL
 GHOST	325	45	80	100	35	37	28
 Doublade0680	Doublade	STEEL
 GHOST	448	59	110	150	45	49	35
-Aegislash (Shield Forme)0681	Aegislash
-Shield Forme	STEEL
-GHOST	500	60	50	140	50	140	60
-Aegislash (Blade Forme)0681	Aegislash
-Blade Forme	STEEL
-GHOST	500	60	140	50	140	50	60
 Spritzee0682	Spritzee	FAIRY
 341	78	52	60	63	65	23
 Aromatisse0683	Aromatisse	FAIRY
@@ -1669,51 +1655,18 @@ Goomy0704	Goomy	DRAGON
 300	45	50	35	55	75	40
 Sliggoo0705	Sliggoo	DRAGON
 452	68	75	53	83	113	60
-Sliggoo (Hisuian Sliggoo)0705	Sliggoo
-Hisuian Sliggoo	STEEL
-DRAGON	452	58	75	83	83	113	40
 Goodra0706	Goodra	DRAGON
 600	90	100	70	110	150	80
-Goodra (Hisuian Goodra)0706	Goodra
-Hisuian Goodra	STEEL
-DRAGON	600	80	100	100	110	150	60
 Klefki0707	Klefki	STEEL
 FAIRY	470	57	80	91	80	87	75
 Phantump0708	Phantump	GHOST
 GRASS	309	43	70	48	50	60	38
 Trevenant0709	Trevenant	GHOST
 GRASS	474	85	110	76	65	82	56
-Pumpkaboo (Average Size)0710	Pumpkaboo
-Average Size	GHOST
-GRASS	335	49	66	70	44	55	51
-Pumpkaboo (Small Size)0710	Pumpkaboo
-Small Size	GHOST
-GRASS	335	44	66	70	44	55	56
-Pumpkaboo (Large Size)0710	Pumpkaboo
-Large Size	GHOST
-GRASS	335	54	66	70	44	55	46
-Pumpkaboo (Super Size)0710	Pumpkaboo
-Super Size	GHOST
-GRASS	335	59	66	70	44	55	41
-Gourgeist (Average Size)0711	Gourgeist
-Average Size	GHOST
-GRASS	494	65	90	122	58	75	84
-Gourgeist (Small Size)0711	Gourgeist
-Small Size	GHOST
-GRASS	494	55	85	122	58	75	99
-Gourgeist (Large Size)0711	Gourgeist
-Large Size	GHOST
-GRASS	494	75	95	122	58	75	69
-Gourgeist (Super Size)0711	Gourgeist
-Super Size	GHOST
-GRASS	494	85	100	122	58	75	54
 Bergmite0712	Bergmite	ICE
 304	55	69	85	32	35	28
 Avalugg0713	Avalugg	ICE
 514	95	117	184	44	46	28
-Avalugg (Hisuian Avalugg)0713	Avalugg
-Hisuian Avalugg	ICE
-ROCK	514	95	127	184	34	36	38
 Noibat0714	Noibat	FLYING
 DRAGON	245	40	30	35	45	40	55
 Noivern0715	Noivern	FLYING
@@ -1722,26 +1675,11 @@ Xerneas0716	Xerneas	FAIRY
 680	126	131	95	131	98	99
 Yveltal0717	Yveltal	DARK
 FLYING	680	126	131	95	131	98	99
-Zygarde (50% Forme)0718	Zygarde
-50% Forme	DRAGON
-GROUND	600	108	100	121	81	95	95
-Zygarde (10% Forme)0718	Zygarde
-10% Forme	DRAGON
-GROUND	486	54	100	71	61	85	115
-Zygarde (Complete Forme)0718	Zygarde
-Complete Forme	DRAGON
-GROUND	708	216	100	121	91	95	85
 Diancie0719	Diancie	ROCK
 FAIRY	600	50	100	150	100	150	50
 Mega Diancie0719	Diancie
 Mega Diancie	ROCK
 FAIRY	700	50	160	110	160	110	110
-Hoopa (Hoopa Confined)0720	Hoopa
-Hoopa Confined	PSYCHIC
-GHOST	600	80	110	60	150	130	70
-Hoopa (Hoopa Unbound)0720	Hoopa
-Hoopa Unbound	PSYCHIC
-DARK	680	80	160	60	170	130	80
 Volcanion0721	Volcanion	FIRE
 WATER	600	80	110	120	130	90	70
 Rowlet0722	Rowlet	GRASS
@@ -1785,42 +1723,12 @@ Crabrawler0739	Crabrawler	FIGHTING
 338	47	82	57	42	47	63
 Crabominable0740	Crabominable	FIGHTING
 ICE	478	97	132	77	62	67	43
-Oricorio (Baile Style)0741	Oricorio
-Baile Style	FIRE
-FLYING	476	75	70	70	98	70	93
-Oricorio (Pom-Pom Style)0741	Oricorio
-Pom-Pom Style	ELECTRIC
-FLYING	476	75	70	70	98	70	93
-Oricorio (Pa'u Style)0741	Oricorio
-Pa'u Style	PSYCHIC
-FLYING	476	75	70	70	98	70	93
-Oricorio (Sensu Style)0741	Oricorio
-Sensu Style	GHOST
-FLYING	476	75	70	70	98	70	93
 Cutiefly0742	Cutiefly	BUG
 FAIRY	304	40	45	40	55	40	84
 Ribombee0743	Ribombee	BUG
 FAIRY	464	60	55	60	95	70	124
 Rockruff0744	Rockruff	ROCK
 280	45	65	40	30	40	60
-Rockruff (Own Tempo Rockruff)0744	Rockruff
-Own Tempo Rockruff	ROCK
-280	45	65	40	30	40	60
-Lycanroc (Midday Form)0745	Lycanroc
-Midday Form	ROCK
-487	75	115	65	55	65	112
-Lycanroc (Midnight Form)0745	Lycanroc
-Midnight Form	ROCK
-487	85	115	75	55	75	82
-Lycanroc (Dusk Form)0745	Lycanroc
-Dusk Form	ROCK
-487	75	117	65	55	65	110
-Wishiwashi (Solo Form)0746	Wishiwashi
-Solo Form	WATER
-175	45	20	20	25	25	40
-Wishiwashi (School Form)0746	Wishiwashi
-School Form	WATER
-620	45	140	130	140	135	30
 Mareanie0747	Mareanie	POISON
 WATER	305	50	53	62	43	52	45
 Toxapex0748	Toxapex	POISON
@@ -1871,16 +1779,8 @@ Palossand0770	Palossand	GHOST
 GROUND	480	85	75	110	100	75	35
 Pyukumuku0771	Pyukumuku	WATER
 410	55	60	130	30	130	5
-Type: Null0772	Type: Null	NORMAL
-534	95	95	95	95	95	59
 Silvally0773	Silvally	NORMAL
-570	95	95	95	95	95	95
-Minior (Meteor Form)0774	Minior
-Meteor Form	ROCK
-FLYING	440	60	60	100	60	100	60
-Minior (Core Form)0774	Minior
-Core Form	ROCK
-FLYING	500	60	100	60	100	60	120
+570	95	95	95	95	95	9
 Komala0775	Komala	NORMAL
 480	65	115	65	75	95	65
 Turtonator0776	Turtonator	FIRE
@@ -1895,19 +1795,19 @@ Drampa0780	Drampa	NORMAL
 DRAGON	485	78	60	85	135	91	36
 Dhelmise0781	Dhelmise	GHOST
 GRASS	517	70	131	100	86	90	40
-Jangmo-o0782	Jangmo-o	DRAGON
+Jangmoo0782	Jangmo-o	DRAGON
 300	45	55	65	45	45	45
-Hakamo-o0783	Hakamo-o	DRAGON
+Hakamoo0783	Hakamo-o	DRAGON
 FIGHTING	420	55	75	90	65	70	65
-Kommo-o0784	Kommo-o	DRAGON
+Kommoo0784	Kommo-o	DRAGON
 FIGHTING	600	75	110	125	100	105	85
-Tapu Koko0785	Tapu Koko	ELECTRIC
+0785	Tapu Koko	ELECTRIC
 FAIRY	570	70	115	85	95	75	130
-Tapu Lele0786	Tapu Lele	PSYCHIC
+0786	Tapu Lele	PSYCHIC
 FAIRY	570	70	85	75	130	115	95
-Tapu Bulu0787	Tapu Bulu	GRASS
+0787	Tapu Bulu	GRASS
 FAIRY	570	70	130	115	85	95	75
-Tapu Fini0788	Tapu Fini	WATER
+0788	Tapu Fini	WATER
 FAIRY	570	70	75	115	95	130	85
 Cosmog0789	Cosmog	PSYCHIC
 200	43	29	31	29	31	37
@@ -1933,15 +1833,6 @@ Guzzlord0799	Guzzlord	DARK
 DRAGON	570	223	101	53	97	53	43
 Necrozma0800	Necrozma	PSYCHIC
 600	97	107	101	127	89	79
-Necrozma (Dusk Mane Necrozma)0800	Necrozma
-Dusk Mane Necrozma	PSYCHIC
-STEEL	680	97	157	127	113	109	77
-Necrozma (Dawn Wings Necrozma)0800	Necrozma
-Dawn Wings Necrozma	PSYCHIC
-GHOST	680	97	113	109	157	127	77
-Necrozma (Ultra Necrozma)0800	Necrozma
-Ultra Necrozma	PSYCHIC
-DRAGON	754	97	167	97	167	97	129
 Magearna0801	Magearna	STEEL
 FAIRY	600	80	95	115	130	115	65
 Marshadow0802	Marshadow	FIGHTING
@@ -2038,12 +1929,6 @@ Barraskewda0847	Barraskewda	WATER
 490	61	123	60	60	50	136
 Toxel0848	Toxel	ELECTRIC
 POISON	242	40	38	35	54	35	40
-Toxtricity (Amped Form)0849	Toxtricity
-Amped Form	ELECTRIC
-POISON	502	75	98	70	114	70	75
-Toxtricity (Low Key Form)0849	Toxtricity
-Low Key Form	ELECTRIC
-POISON	502	75	98	70	114	70	75
 Sizzlipede0850	Sizzlipede	FIRE
 BUG	305	50	65	45	50	50	45
 Centiskorch0851	Centiskorch	FIRE
@@ -2076,7 +1961,7 @@ Cursola0864	Cursola	GHOST
 510	60	95	50	145	130	30
 Sirfetch'd0865	Sirfetch'd	FIGHTING
 507	62	135	95	68	82	65
-Mr. Rime0866	Mr. Rime	ICE
+0866	Mr. Rime	ICE
 PSYCHIC	520	80	85	75	110	100	70
 Runerigus0867	Runerigus	GROUND
 GHOST	483	58	95	145	50	105	30
@@ -2094,24 +1979,6 @@ Frosmoth0873	Frosmoth	ICE
 BUG	475	70	65	60	125	90	65
 Stonjourner0874	Stonjourner	ROCK
 470	100	125	135	20	20	70
-Eiscue (Ice Face)0875	Eiscue
-Ice Face	ICE
-470	75	80	110	65	90	50
-Eiscue (Noice Face)0875	Eiscue
-Noice Face	ICE
-470	75	80	70	65	50	130
-Indeedee (Male)0876	Indeedee
-Male	PSYCHIC
-NORMAL	475	60	65	55	105	95	95
-Indeedee (Female)0876	Indeedee
-Female	PSYCHIC
-NORMAL	475	70	55	65	95	105	85
-Morpeko (Full Belly Mode)0877	Morpeko
-Full Belly Mode	ELECTRIC
-DARK	436	58	95	58	70	58	97
-Morpeko (Hangry Mode)0877	Morpeko
-Hangry Mode	ELECTRIC
-DARK	436	58	95	58	70	58	97
 Cufant0878	Cufant	STEEL
 330	72	80	49	40	49	40
 Copperajah0879	Copperajah	STEEL
@@ -2132,31 +1999,10 @@ Drakloak0886	Drakloak	DRAGON
 GHOST	410	68	80	50	60	50	102
 Dragapult0887	Dragapult	DRAGON
 GHOST	600	88	120	75	100	75	142
-Zacian (Hero of Many Battles)0888	Zacian
-Hero of Many Battles	FAIRY
-660	92	120	115	80	115	138
-Zacian (Crowned Sword)0888	Zacian
-Crowned Sword	FAIRY
-STEEL	700	92	150	115	80	115	148
-Zamazenta (Hero of Many Battles)0889	Zamazenta
-Hero of Many Battles	FIGHTING
-660	92	120	115	80	115	138
-Zamazenta (Crowned Shield)0889	Zamazenta
-Crowned Shield	FIGHTING
-STEEL	700	92	120	140	80	140	128
 Eternatus0890	Eternatus	POISON
 DRAGON	690	140	85	95	145	95	130
-Eternatus (Eternamax)0890	Eternatus
-Eternamax	POISON
-DRAGON	1125	255	115	250	125	250	130
 Kubfu0891	Kubfu	FIGHTING
 385	60	90	60	53	50	72
-Urshifu (Single Strike Style)0892	Urshifu
-Single Strike Style	FIGHTING
-DARK	550	100	130	100	63	60	97
-Urshifu (Rapid Strike Style)0892	Urshifu
-Rapid Strike Style	FIGHTING
-WATER	550	100	130	100	63	60	97
 Zarude0893	Zarude	DARK
 GRASS	600	105	120	105	70	95	105
 Regieleki0894	Regieleki	ELECTRIC
@@ -2169,34 +2015,16 @@ Spectrier0897	Spectrier	GHOST
 580	100	65	60	145	80	130
 Calyrex0898	Calyrex	PSYCHIC
 GRASS	500	100	80	80	80	80	80
-Calyrex (Ice Rider)0898	Calyrex
-Ice Rider	PSYCHIC
-ICE	680	100	165	150	85	130	50
-Calyrex (Shadow Rider)0898	Calyrex
-Shadow Rider	PSYCHIC
-GHOST	680	100	85	80	165	100	150
 Wyrdeer0899	Wyrdeer	NORMAL
 PSYCHIC	525	103	105	72	105	75	65
 Kleavor0900	Kleavor	BUG
 ROCK	500	70	135	95	45	70	85
 Ursaluna0901	Ursaluna	GROUND
 NORMAL	550	130	140	105	45	80	50
-Basculegion (Male)0902	Basculegion
-Male	WATER
-GHOST	530	120	112	65	80	75	78
-Basculegion (Female)0902	Basculegion
-Female	WATER
-GHOST	530	120	92	65	100	75	78
 Sneasler0903	Sneasler	FIGHTING
 POISON	510	80	130	60	40	80	120
 Overqwil0904	Overqwil	DARK
 POISON	510	85	115	95	65	65	85
-Enamorus (Incarnate Forme)0905	Enamorus
-Incarnate Forme	FAIRY
-FLYING	580	74	115	70	135	80	106
-Enamorus (Therian Forme)0905	Enamorus
-Therian Forme	FAIRY
-FLYING	580	74	115	110	135	100	46
 Sprigatito0906	Sprigatito	GRASS
 310	40	61	54	45	45	65
 Floragato0907	Floragato	GRASS
@@ -2217,12 +2045,6 @@ Quaquaval0914	Quaquaval	WATER
 FIGHTING	530	85	120	80	85	75	85
 Lechonk0915	Lechonk	NORMAL
 254	54	45	40	35	45	35
-Oinkologne (Male)0916	Oinkologne
-Male	NORMAL
-489	110	100	75	59	80	65
-Oinkologne (Female)0916	Oinkologne
-Female	NORMAL
-489	115	90	70	59	90	65
 Tarountula0917	Tarountula	BUG
 210	35	41	45	29	40	20
 Spidops0918	Spidops	BUG
@@ -2239,12 +2061,6 @@ Pawmot0923	Pawmot	ELECTRIC
 FIGHTING	490	70	115	70	70	60	105
 Tandemaus0924	Tandemaus	NORMAL
 305	50	50	45	40	45	75
-Maushold (Family of Four)0925	Maushold
-Family of Four	NORMAL
-470	74	75	70	65	75	111
-Maushold (Family of Three)0925	Maushold
-Family of Three	NORMAL
-470	74	75	70	65	75	111
 Fidough0926	Fidough	FAIRY
 312	37	55	70	30	55	65
 Dachsbun0927	Dachsbun	FAIRY
@@ -2255,18 +2071,6 @@ Dolliv0929	Dolliv	GRASS
 NORMAL	354	52	53	60	78	78	33
 Arboliva0930	Arboliva	GRASS
 NORMAL	510	78	69	90	125	109	39
-Squawkabilly (Green Plumage)0931	Squawkabilly
-Green Plumage	NORMAL
-FLYING	417	82	96	51	45	51	92
-Squawkabilly (Blue Plumage)0931	Squawkabilly
-Blue Plumage	NORMAL
-FLYING	417	82	96	51	45	51	92
-Squawkabilly (Yellow Plumage)0931	Squawkabilly
-Yellow Plumage	NORMAL
-FLYING	417	82	96	51	45	51	92
-Squawkabilly (White Plumage)0931	Squawkabilly
-White Plumage	NORMAL
-FLYING	417	82	96	51	45	51	92
 Nacli0932	Nacli	ROCK
 280	55	55	75	35	35	25
 Naclstack0933	Naclstack	ROCK
@@ -2331,12 +2135,6 @@ Bombirdier0962	Bombirdier	FLYING
 DARK	485	70	103	85	60	85	82
 Finizen0963	Finizen	WATER
 315	70	45	40	45	40	75
-Palafin (Zero Form)0964	Palafin
-Zero Form	WATER
-457	100	70	72	53	62	100
-Palafin (Hero Form)0964	Palafin
-Hero Form	WATER
-650	100	160	97	106	87	100
 Varoom0965	Varoom	STEEL
 POISON	300	45	70	63	30	45	47
 Revavroom0966	Revavroom	STEEL
@@ -2363,52 +2161,37 @@ Veluza0976	Veluza	WATER
 PSYCHIC	478	90	102	73	78	65	70
 Dondozo0977	Dondozo	WATER
 530	150	100	115	65	65	35
-Tatsugiri (Curly Form)0978	Tatsugiri
-Curly Form	DRAGON
-WATER	475	68	50	60	120	95	82
-Tatsugiri (Droopy Form)0978	Tatsugiri
-Droopy Form	DRAGON
-WATER	475	68	50	60	120	95	82
-Tatsugiri (Stretchy Form)0978	Tatsugiri
-Stretchy Form	DRAGON
-WATER	475	68	50	60	120	95	82
 Annihilape0979	Annihilape	FIGHTING
 GHOST	535	110	115	80	50	90	90
 Clodsire0980	Clodsire	POISON
 GROUND	430	130	75	60	45	100	20
 Farigiraf0981	Farigiraf	NORMAL
 PSYCHIC	520	120	90	70	110	70	60
-Dudunsparce (Two-Segment Form)0982	Dudunsparce
-Two-Segment Form	NORMAL
-520	125	100	80	85	75	55
-Dudunsparce (Three-Segment Form)0982	Dudunsparce
-Three-Segment Form	NORMAL
-520	125	100	80	85	75	55
 Kingambit0983	Kingambit	DARK
 STEEL	550	100	135	120	60	85	50
-Great Tusk0984	Great Tusk	GROUND
+0984	Great Tusk	GROUND
 FIGHTING	570	115	131	131	53	53	87
-Scream Tail0985	Scream Tail	FAIRY
+0985	Scream Tail	FAIRY
 PSYCHIC	570	115	65	99	65	115	111
-Brute Bonnet0986	Brute Bonnet	GRASS
+t0986	Brute Bonnet	GRASS
 DARK	570	111	127	99	79	99	55
-Flutter Mane0987	Flutter Mane	GHOST
+0987	Flutter Mane	GHOST
 FAIRY	570	55	55	55	135	135	135
-Slither Wing0988	Slither Wing	BUG
+Slithering0988	Slither Wing	BUG
 FIGHTING	570	85	135	79	85	105	81
-Sandy Shocks0989	Sandy Shocks	ELECTRIC
+Sandyhocks0989	Sandy Shocks	ELECTRIC
 GROUND	570	85	81	97	121	85	101
-Iron Treads0990	Iron Treads	GROUND
+Ironreads0990	Iron Treads	GROUND
 STEEL	570	90	112	120	72	70	106
-Iron Bundle0991	Iron Bundle	ICE
+Ironundle0991	Iron Bundle	ICE
 WATER	570	56	80	114	124	60	136
-Iron Hands0992	Iron Hands	FIGHTING
+Ironands0992	Iron Hands	FIGHTING
 ELECTRIC	570	154	140	108	50	68	50
-Iron Jugulis0993	Iron Jugulis	DARK
+Ironugulis0993	Iron Jugulis	DARK
 FLYING	570	94	80	86	122	80	108
-Iron Moth0994	Iron Moth	FIRE
+Ironoth0994	Iron Moth	FIRE
 POISON	570	80	70	60	140	110	110
-Iron Thorns0995	Iron Thorns	ROCK
+Ironhorns0995	Iron Thorns	ROCK
 ELECTRIC	570	100	134	110	70	84	72
 Frigibax0996	Frigibax	DRAGON
 ICE	320	65	75	45	35	45	55
@@ -2416,33 +2199,27 @@ Arctibax0997	Arctibax	DRAGON
 ICE	423	90	95	66	45	65	62
 Baxcalibur0998	Baxcalibur	DRAGON
 ICE	600	115	145	92	75	86	87
-Gimmighoul (Chest Form)0999	Gimmighoul
-Chest Form	GHOST
-300	45	30	70	75	70	10
-Gimmighoul (Roaming Form)0999	Gimmighoul
-Roaming Form	GHOST
-300	45	30	25	75	45	80
 Gholdengo1000	Gholdengo	STEEL
 GHOST	550	87	60	95	133	91	84
-Wo-Chien1001	Wo-Chien	DARK
+Chien1001	Wo-Chien	DARK
 GRASS	570	85	85	100	95	135	70
-Chien-Pao1002	Chien-Pao	DARK
+Chienao1002	Chien-Pao	DARK
 ICE	570	80	120	80	90	65	135
-Ting-Lu1003	Ting-Lu	DARK
+Tingu1003	Ting-Lu	DARK
 GROUND	570	155	110	125	55	80	45
-Chi-Yu1004	Chi-Yu	DARK
+Chiu1004	Chi-Yu	DARK
 FIRE	570	55	80	80	135	120	100
-Roaring Moon1005	Roaring Moon	DRAGON
+Roaringoon1005	Roaring Moon	DRAGON
 DARK	590	105	139	71	55	101	119
-Iron Valiant1006	Iron Valiant	FAIRY
+Ironaliant1006	Iron Valiant	FAIRY
 FIGHTING	590	74	130	90	120	60	116
 Koraidon1007	Koraidon	FIGHTING
 DRAGON	670	100	135	115	85	100	135
 Miraidon1008	Miraidon	ELECTRIC
 DRAGON	670	100	85	100	135	115	135
-Walking Wake1009	Walking Wake	WATER
+Walkingake1009	Walking Wake	WATER
 DRAGON	590	99	83	91	125	83	109
-Iron Leaves1010	Iron Leaves	GRASS
+Ironeaves1010	Iron Leaves	GRASS
 PSYCHIC	590	90	130	88	70	108	104
 """
 
@@ -2470,10 +2247,11 @@ PSYCHIC	590	90	130	88	70	108	104
 
     text = re.sub("\n[A-Z]* *\n","\n",text)
 
-    lista = text.split("\n")[:630]
+    lista = text.split("\n")[liczba:]
     lista = [x.split('\t') for x in lista]
     lista = [x for x in lista if len(x) == 3 or len(x) == 4]
     counter =0
+
 
     for pok in lista:
         if PokemonSpecies.objects.filter(name=pok[1].capitalize().strip()).count() == 0:
@@ -2511,6 +2289,5 @@ PSYCHIC	590	90	130	88	70	108	104
             pokemon.save()
 
     print(counter)
-
 
 

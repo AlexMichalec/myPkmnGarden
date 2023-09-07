@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 import random
-
+import time
 
 def random_pokemon_name(where=None):
     base = PokemonSpecies.objects.filter(if_starter=False).filter(if_legendary=False)
@@ -71,10 +71,17 @@ def home(request):
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser)
 def info(request):
+    evolution_list=[]
+    temp = PokemonSpecies.objects.all().order_by('national_pokedex_number').filter(if_evolve_by_level_up=True)
+    for t in temp:
+        for x in t.evolve_species.all():
+            evolution_list.append(f"#{t.national_pokedex_number} {t.name} --{t.evolve_level}lv.--> {x.name}")
+
     context = {
         'name': 'Alex',
         'pokemon_list': PokemonSpecies.objects.all().order_by('national_pokedex_number'),
         'type_list': PokemonType.objects.all().order_by('name'),
+        'evolution_list': evolution_list,
     }
     return render(request, 'pokemon/info.html', context)
 
@@ -242,3 +249,38 @@ def pokedex(request):
     pokemon_list = PokemonSpecies.objects.all().order_by('national_pokedex_number')
     pokemon_list = [(x.is_caught(request),x) for x in pokemon_list]
     return render(request, 'pokemon/pokedex.html', {"pokemon_list": pokemon_list})
+
+@login_required(login_url='login')
+def who_that_pokemon(request, pokemon_id):
+    if PokemonMonster.objects.get(id=pokemon_id).owner != request.user:
+        return redirect('home')
+    pokemon = random_pokemon_name()
+    pokemon_img = PokemonSpecies.objects.get(name=pokemon).picture_source
+    pokemon_names = {pokemon}
+    while len(pokemon_names)<4:
+        pokemon_names.add(random_pokemon_name())
+    pokemon_names = list(pokemon_names)
+    random.shuffle(pokemon_names)
+    trained_pokemon = PokemonMonster.objects.get(id=pokemon_id)
+    if request.method=="POST" and request.POST['choice'] == "True":
+        trained_pokemon.add_exp(20)
+        trained_pokemon.save()
+    if trained_pokemon.name is None:
+        name = trained_pokemon.species.name
+    else:
+        name = trained_pokemon.name
+    exp_now = trained_pokemon.get_exp() - trained_pokemon.level ** 3
+    exp_next_level = (trained_pokemon.level + 1) ** 3 - trained_pokemon.level ** 3
+    level = trained_pokemon.level
+
+    context={
+        'pokemon': pokemon,
+        'pokemon_names': pokemon_names,
+        'pokemon_image': pokemon_img,
+        'name': name,
+        'level': level,
+        'exp_now': exp_now,
+        'exp_next_level': exp_next_level
+    }
+    time.sleep(0.5)
+    return render(request, "pokemon/who_that_pokemon.html",context)
