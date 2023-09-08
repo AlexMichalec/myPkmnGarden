@@ -20,7 +20,8 @@ img {
 
 #explore_pokemon_pic {
     position: absolute;
-    left: 34%;
+    left: 50%;
+    transform: translate(-50%,0);
     max-width: 240px;
 
 }

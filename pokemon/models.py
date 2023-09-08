@@ -32,6 +32,7 @@ class PokemonSpecies(models.Model):
     if_starter = models.BooleanField(default=False)
     if_genderless = models.BooleanField(default=False)
     if_legendary = models.BooleanField(default=False)
+    if_baby = models.BooleanField(default=False)
 
     if_evolve_by_level_up = models.BooleanField(default=False)
     evolve_level = models.IntegerField(default=0)

@@ -10,7 +10,7 @@
     <div>
         <h3>Available Pokemons:</h3>
         {% for pokemon in pokemon_list %}
-            <li>#{{pokemon.national_pokedex_number}}. {{pokemon.name}} </li>
+            <li>#{{pokemon.national_pokedex_number}}. {{pokemon.name}}  -- {{pokemon.generation}}</li>
         {% endfor %}
     </div>
     <div>

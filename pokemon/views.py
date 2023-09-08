@@ -9,8 +9,11 @@ from django.contrib.auth import authenticate, login, logout
 import random
 import time
 
-def random_pokemon_name(where=None):
-    base = PokemonSpecies.objects.filter(if_starter=False).filter(if_legendary=False)
+def random_pokemon_name(where=None, legendary=True):
+    if legendary:
+        base = PokemonSpecies.objects.filter(if_starter=False)
+    else:
+        base = PokemonSpecies.objects.filter(if_starter=False).filter(if_legendary=False)
     all = list(base)
 
     if where == "sea":
@@ -28,10 +31,10 @@ def random_pokemon_name(where=None):
         type1 = PokemonType.objects.get(name='Rock')
         type2 = PokemonType.objects.get(name='Ground')
         type3 = PokemonType.objects.get(name='Steel')
-        all = list(PokemonSpecies.objects.filter(if_starter=False).filter(if_legendary=False).filter(type=type1)) + list(
-            PokemonSpecies.objects.filter(if_starter=False).filter(type=type2)) + list(
-            PokemonSpecies.objects.filter(if_starter=False).filter(type=type3))
-        all = all + [PokemonSpecies.objects.get(name="Zubat")]*10
+        all = list(base.filter(if_starter=False).filter(if_legendary=False).filter(type=type1)) + list(
+            base.filter(if_starter=False).filter(type=type2)) + list(
+            base.filter(if_starter=False).filter(type=type3))
+        all = all + [PokemonSpecies.objects.get(name="Zubat")]*100
 
     elif where == "volcano":
         type1 = PokemonType.objects.get(name='Fire')
@@ -49,9 +52,13 @@ def random_pokemon_name(where=None):
             base.filter(type=type2)) + list(
             base.filter(type=type3))
 
-    legends = list(PokemonSpecies.objects.filter(if_legendary=True))
-    all = all*100 + legends
-    return random.choice(all).name
+    result=random.choice(all)
+    if where:
+        while result.if_baby or (len(result.pokemonspecies_set.all())>0 and not result.pokemonspecies_set.all()[0].if_baby):
+            result = random.choice(all)
+
+
+    return result.name
 
 
 def home(request):
@@ -236,7 +243,7 @@ def explore(request, where=None):
             buttons = [("L", "Left"), ("S", "Straight ahead"), ("R", "Right")]
         else:
             lines.append("Wild pokemon appeared!")
-            pokemon = random_pokemon_name(where)
+            pokemon = random_pokemon_name(where,legendary=False)
             lines.append("It's " + pokemon)
             lines.append("What are you doing?")
             buttons = [(pokemon, "Try to catch it"), ("F", "Flee")]
@@ -268,7 +275,7 @@ def pokedex(request):
 def who_that_pokemon(request, pokemon_id):
     if PokemonMonster.objects.get(id=pokemon_id).owner != request.user:
         return redirect('home')
-    pokemon = random_pokemon_name()
+    pokemon = random_pokemon_name(legendary=True)
     pokemon_img = PokemonSpecies.objects.get(name=pokemon).picture_source
     pokemon_names = {pokemon}
     while len(pokemon_names)<4:
