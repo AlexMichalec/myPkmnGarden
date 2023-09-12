@@ -108,3 +108,18 @@ class PokemonMonster(models.Model):
             return f"{self.species.name} [{str(self.level)}]"
         else:
             return f"{self.name} ({self.species.name}) [{str(self.level)}]"
+
+
+class Item(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    picture_source = models.CharField(max_length=200)
+    value = models.IntegerField()
+    def __str__(self):
+        return self.name
+
+class EvolveItem(Item):
+    pokemons = models.ManyToManyField(PokemonSpecies, blank=True)
+
+class Pokeball(Item):
+    chance_of_catching = models.FloatField()
